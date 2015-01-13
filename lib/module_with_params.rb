@@ -8,10 +8,11 @@ module ModuleWithParams
   module ClassMethods
     def [](*args)
       m = self
+      name = m.name.split('::').last
       
       Module.new do
         include m
-        define_method(:"_#{m.name}_module_options"){ (args.size == 1) ? args[0] : args }        
+        define_method(:"_#{name}_module_options"){ (args.size == 1) ? args[0] : args }
       end
       
     end

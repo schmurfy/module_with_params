@@ -19,6 +19,13 @@ module TestModuleArray
     _TestModuleArray_module_options[1]
   end
   
+  module NestedModule
+    include ModuleWithParams
+    
+    def number
+      _NestedModule_module_options
+    end
+  end
 end
 
 describe 'Module with params' do
@@ -43,6 +50,14 @@ describe 'Module with params' do
     obj = cl.new
     obj.first.should == "hello"
     obj.second.should == 43
+  end
+  
+  should 'handle nested modules' do
+    cl = Class.new do
+      include TestModuleArray::NestedModule[5]
+    end
+    obj = cl.new
+    obj.number.should == 5
   end
   
 end
